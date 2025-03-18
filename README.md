@@ -1,8 +1,11 @@
 # Harper + Nextjs Ecommerce Template
 
-This is a template for building a [Harper](https://www.harperdb.io/) powered [Nextjs](https://nextjs.org/) application.
+This is a template for building a [Harper](https://www.harperdb.io/) powered [Nextjs](https://nextjs.org/) application. Eccomerce is the application theme to demo a fullstack application with Harper providing the backend database, API connecting to the data, a caching provider, and a server to run Next.js on. However, the same patterns in this code can be used to run any type of app that requires dynamic data and/or caching!
 
-To get started, make sure you have [installed Harper](https://docs.harperdb.io/docs/install-harperdb), which can be quickly done with `npm install -g harperdb`. You can run this reposity by cloning it down and running the following in your terminal:
+Almost 2% of global ecommerce sales flow through Harper Systems, with an average p95 latency of 1.12ms across early hints, redirects, and product page lookups for real-world e-commerce applications. See for yourself how fast this demo is by checking the Chrome devtools performance tab on our [live demo](https://test-kgdemo.harperdbcloud.com:9926/).
+
+## Getting Started
+To get up and running, [install Harper](https://docs.harperdb.io/docs/install-harperdb), which can be quickly done with `npm install -g harperdb`. You can run this reposity by cloning it down and running the following in your terminal:
 
 `npm i`
 `npm run dev`
