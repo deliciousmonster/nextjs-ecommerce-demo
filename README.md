@@ -7,12 +7,12 @@ Harper provides the backend database, API, caching, and a server to run the Next
 Almost 2% of global ecommerce sales flow through Harper Systems, with an average p95 latency of 1.12ms across early hints, redirects, and product page lookups for real-world e-commerce applications. See the LCP stats for yourself by opening the Chrome devtools performance tab on our [live demo](https://test-kgdemo.harperdbcloud.com:9926/).
 
 ## Getting Started
-- [install Harper](https://docs.harperdb.io/docs/install-harperdb): `npm install -g harperdb`
-- [Clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-- Run`npm i`
+- [Install Harper](https://docs.harperdb.io/docs/install-harperdb): `npm install -g harperdb`
+- [Clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) and change directory in your terminal to the code
+- Run `npm i`
 - Run `npm run dev`
-- To view the frontend open [localhost:9925](http://localhost:9925/)
-- To view the data in Harper Studio UI open [localhost:9926](http://localhost:9926/)
+- View the frontend at [localhost:9925](http://localhost:9925/)
+- View the data in Harper Studio UI at [localhost:9926](http://localhost:9926/)
 
 ## More Information
 For more information about getting started with Harper and building your Next.js applications, see our [getting started guides and documentation](https://www.harperdb.io/development/technologies/next-js).
