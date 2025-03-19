@@ -14,6 +14,11 @@ Almost 2% of global ecommerce sales flow through Harper Systems, with an average
 - View the frontend at [localhost:9925](http://localhost:9925/)
 - View the data in Harper Studio UI at [localhost:9926](http://localhost:9926/)
 
+## Optional Config: Algolia Search & OpenAI Customized Product Description
+- Run `cp .env.template .env`
+- Get keys from Algolia and / or OpenAI and add to the .env file
+- Restart the application
+
 ## More Information
 For more information about getting started with Harper and building your Next.js applications, see our [getting started guides and documentation](https://www.harperdb.io/development/technologies/next-js).
 
