@@ -1,6 +1,7 @@
 'use server';
 import { tables } from 'harperdb';
 const { Product } = tables;
+import { initAlgolia, initOpenai } from '../lib/utils';
 
 // Harper DB Server Actions
 export async function listProducts(conditions = {}) {
@@ -26,38 +27,34 @@ export async function updateUserTraits(id = "1", traits) {
 }
 
 // Algolia Search Server Actions
-import { algoliasearch } from 'algoliasearch';
-
-const algoliaClient = algoliasearch(
-	process.env.ALGOLIA_APP_ID,
-	process.env.ALGOLIA_API_KEY,
-);
-
+const algoliaClient = initAlgolia();
 export async function searchProducts(searchTerm = ''){
-	return await algoliaClient.searchSingleIndex({
+	if (algoliaClient) {
+		return await algoliaClient.searchSingleIndex({
 			indexName: 'productdata',
 			searchParams: { query: searchTerm },
-		});
+		});		
+	}
+	// TODO: return harperdb graphql query
+	return [];
 }
 
 // OpenAI Server Actions
-import OpenAI from "openai";
-const openai = new OpenAI({
-	apiKey: process.env.OPENAI_API_KEY,
-	project: process.env.OPENAI_PROJECT_ID,
-});
-
+const openaiClient = initOpenai();
 export async function customizeProductDescription(userTraits = [], productDescription) {
-	const prompt = `Given that a person has the following traits: ${userTraits.join(', ')} 
-		can you rewrite the following product description passage for someone like this: ${productDescription} without using exclamation points?
-		Only return the product description, no other text.
-		Keep the description to a 300 character length maximum.
-	`;
-  const response = await openai.chat.completions.create({
-    messages: [{ role: 'user', content: prompt }],
-    model: 'gpt-4o-mini',
-  });
-	return response.choices[0].message.content;
+	if (openaiClient) {
+		const prompt = `Given that a person has the following traits: ${userTraits.join(', ')} 
+			can you rewrite the following product description passage for someone like this: ${productDescription} without using exclamation points?
+			Only return the product description, no other text.
+			Keep the description to a 300 character length maximum.
+		`;
+		const response = await openaiClient.chat.completions.create({
+			messages: [{ role: 'user', content: prompt }],
+			model: 'gpt-4o-mini',
+		});
+		return response.choices[0].message.content;		
+	}
+	return null;
 }
 
 export async function getAiRecommendations(userTraits = [], currentId) {

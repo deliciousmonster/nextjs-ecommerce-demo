@@ -36,7 +36,6 @@ export default function ProductPage({ id, product }) {
           const customDescription = await customizeProductDescription(traits, product.description);
           setCustomDescription(customDescription);
           setProductDescReady(true);
-
         } catch (err) {
           console.error('Error fetching data:', err);
         }
@@ -65,7 +64,7 @@ export default function ProductPage({ id, product }) {
 
   function renderProductDescription() {
     // No customer traits
-    if (!traits || !Array.isArray(traits) || !traits.length) {
+    if (!traits || !Array.isArray(traits) || !traits.length || !customDescription) {
       return product.description;
     }
 

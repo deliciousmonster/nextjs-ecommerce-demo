@@ -15,7 +15,9 @@ export function SiteHeader() {
     // TODO: could debounce for optimization
     searchProducts(e.target.value)
       .then(res => {
-        setSearchResults(res.hits);
+        if (res && res.hits) {
+          setSearchResults(res.hits);
+        }
       });
   }
   
