@@ -2,7 +2,7 @@ import productdata from "./productdata.json" with { type: "json" };
 
 // product table seed data
 for (const product of productdata) {
-	tabls.Product.put(product);
+	tables.Product.put(product);
 }
 
 // trait table seed data
