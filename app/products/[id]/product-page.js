@@ -1,12 +1,14 @@
 'use client';
 
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { useState, useEffect, useContext } from "react";
 import { ShoppingBag, Star, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ControlPanelContext } from "@/components/control-panel";
 import {
   listProducts,
   customizeProductDescription,
@@ -15,6 +17,10 @@ import {
 
 export default function ProductPage({ id, product }) {
   if (!product) notFound();
+
+  const { aiPersonalizationEnabled } = useContext(ControlPanelContext);
+  console.log('controlPanel ', aiPersonalizationEnabled);
+
   const [productDescReady, setProductDescReady] = useState(false);
   const [recommendationsReady, setRecommendationsReady] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState([]);

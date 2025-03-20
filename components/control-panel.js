@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import Image from "next/image";
 import {
   Dialog,
@@ -12,14 +12,22 @@ import {
 } from './ui/dialog';
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { Switch } from "./ui/switch";
 import { Trash } from "lucide-react"
 import harper_logo from './harper_logo.png'
 import { getUserTraits, updateUserTraits } from '../app/actions';
+
+export const ControlPanelContext = createContext({
+  aiPersonalizationEnabled: true,
+  algoliaEnabled: true,
+});
 
 export function ControlPanel() {
   const [traits, setTraits] = useState([]);
   const [traitsReady, setTraitsReady] = useState(null);
   const [traitValue, setTraitValue] = useState('');
+  const [aiPersonalizationEnabled, setAiPersonalizationEnabled] = useState(true);
+
   
   useEffect(() => {
     const fetchData = async () => {
@@ -61,48 +69,61 @@ export function ControlPanel() {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger>
-        <div className="control-panel">
-          <Image
-            className="control-panel-img"
-            src={harper_logo}
-            alt='harper logo'
-          />
-          Admin
-        </div>
-      </DialogTrigger>
-      <DialogPortal>
-        <DialogContent>
-          <DialogTitle>Demo Admin Panel</DialogTitle>
-          <DialogDescription>Customize user traits and toggle AI functionality</DialogDescription>
-          <div>
-            <h3>Current Traits</h3>
-            <div style={{ fontSize: 14, color: 'gray' }}>
-              [
-              {traitsReady && traits ? traits.map((trait, i) => (
-                <span key={`trait-${i}-${trait}`}>
-                  {trait}
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    id={`btntraitid-${i}`}
-                    onClick={handleDeleteTrait}
-                  >
-                    <Trash className="h-3 w-3" color="red" id={`icntraitid-${i}`} />
-                  </Button>
-                  {i === traits.length-1 ? '' : ', '}
-                </span>
-              )) : 'Loading'}
-              ]
-            </div>
+    <ControlPanelContext.Provider value={{ aiPersonalizationEnabled }}>
+      <Dialog>
+        <DialogTrigger>
+          <div className="control-panel">
+            <Image
+              className="control-panel-img"
+              src={harper_logo}
+              alt='harper logo'
+            />
+            Admin
           </div>
-          <Input onChange={handleTextChange} value={traitValue} />
-          <Button size="lg" variant="default" style={{ backgroundColor: '#262626' }} onClick={handleAddTrait}>
-            Add Trait
-          </Button>
-        </DialogContent>
-      </DialogPortal>
-    </Dialog>
+        </DialogTrigger>
+        <DialogPortal>
+          <DialogContent>
+            <DialogTitle>Application Admin Panel</DialogTitle>
+            <DialogDescription>Customize user traits and toggle AI functionality</DialogDescription>
+            <div>
+              <h3>Features Enabled</h3>
+              <div  style={{ fontSize: 14, color: 'gray' }}>
+                <span style={{ paddingRight: 20 }}>OpenAI Product Personalization Enabled</span>
+                <Switch
+                  text={aiPersonalizationEnabled ? 'On' : 'Off'}
+                  checked = {aiPersonalizationEnabled}
+                  onClick={() => setAiPersonalizationEnabled(!aiPersonalizationEnabled)}
+                />
+              </div>
+            </div>
+            <div>
+              <h3>Current Traits</h3>
+              <div style={{ fontSize: 14, color: 'gray' }}>
+                [
+                {traitsReady && traits ? traits.map((trait, i) => (
+                  <span key={`trait-${i}-${trait}`}>
+                    {trait}
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      id={`btntraitid-${i}`}
+                      onClick={handleDeleteTrait}
+                    >
+                      <Trash className="h-3 w-3" color="red" id={`icntraitid-${i}`} />
+                    </Button>
+                    {i === traits.length-1 ? '' : ', '}
+                  </span>
+                )) : 'Loading'}
+                ]
+              </div>
+            </div>
+            <Input onChange={handleTextChange} value={traitValue} />
+            <Button size="lg" variant="default" style={{ backgroundColor: '#262626' }} onClick={handleAddTrait}>
+              Add Trait
+            </Button>
+          </DialogContent>
+        </DialogPortal>
+      </Dialog>
+    </ControlPanelContext.Provider>
   );
 }
