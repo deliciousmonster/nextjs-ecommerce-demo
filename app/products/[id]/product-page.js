@@ -15,8 +15,8 @@ import {
 
 export default function ProductPage({ id, product }) {
   if (!product) notFound();
-  const [productDescReady, setProductDescReady] = useState(null);
-  const [recommendationsReady, setRecommendationsReady] = useState(null);
+  const [productDescReady, setProductDescReady] = useState(false);
+  const [recommendationsReady, setRecommendationsReady] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [customDescription, setCustomDescription] = useState(null);
   const [traits, setTraits] = useState(null);
@@ -30,20 +30,19 @@ export default function ProductPage({ id, product }) {
       // If there are custom user traits, get AI recommended product description
       if (Array.isArray(traits) && traits.length) {
         try {
-          setProductDescReady(false);
-
           // Get AI generated customized product description
           const customDescription = await customizeProductDescription(traits, product.description);
           setCustomDescription(customDescription);
           setProductDescReady(true);
         } catch (err) {
-          console.error('Error fetching data:', err);
+          console.error('Error fetching custom description data:', err);
         }
+      } else {
+        setProductDescReady(true);
       }
 
-      // Get default product recommendation
+      // Get default related product recommendations
       try {
-        setRecommendationsReady(false);
         const defaultRecommendation = await listProducts({
           conditions: [
             { attribute: 'category', value: product.category, comparator: 'equals' },
@@ -54,7 +53,7 @@ export default function ProductPage({ id, product }) {
         setRelatedProducts(defaultRecommendation);
         setRecommendationsReady(true);
       } catch (err) {
-        console.error('Error fetching data:', err);
+        console.error('Error fetching related product data:', err);
       }
     };
 
@@ -63,8 +62,8 @@ export default function ProductPage({ id, product }) {
   }, []);
 
   function renderProductDescription() {
-    // No customer traits
-    if (!traits || !Array.isArray(traits) || !traits.length || !customDescription) {
+    // No custom traits, render default product description
+    if ((!traits || !Array.isArray(traits) || !traits.length) && productDescReady === true) {
       return product.description;
     }
 
@@ -74,6 +73,10 @@ export default function ProductPage({ id, product }) {
     }
     if (customDescription && productDescReady) {
       return customDescription;
+    }
+    // customDescription returned null
+    if (!customDescription && productDescReady === true){
+      return product.description;
     }
   }
 
