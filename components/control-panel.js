@@ -19,7 +19,7 @@ import { getUserTraits, updateUserTraits } from '../app/actions';
 
 export const ControlPanelContext = createContext({
   aiPersonalizationEnabled: true,
-  algoliaEnabled: true,
+  // algoliaEnabled: true,
 });
 
 export function ControlPanel() {
@@ -27,6 +27,7 @@ export function ControlPanel() {
   const [traitsReady, setTraitsReady] = useState(null);
   const [traitValue, setTraitValue] = useState('');
   const [aiPersonalizationEnabled, setAiPersonalizationEnabled] = useState(true);
+  // const [algoliaEnabled, setAlgoliaEnabled] = useState(true);
 
   
   useEffect(() => {
@@ -51,7 +52,6 @@ export function ControlPanel() {
 
     // server action - update harper DB
     updateUserTraits("1", newTraits);
-    // update state (should be getting successful response from DB)
     setTraits(newTraits);
   }
 
@@ -62,8 +62,6 @@ export function ControlPanel() {
   function handleAddTrait() {
     // server action - update harper DB
     updateUserTraits("1", [traitValue, ...traits]);
-
-    // update state (should be getting successful response from DB)
     setTraitValue('');
     setTraits([traitValue, ...traits]);
   }
@@ -84,43 +82,64 @@ export function ControlPanel() {
         <DialogPortal>
           <DialogContent>
             <DialogTitle>Application Admin Panel</DialogTitle>
-            <DialogDescription>Customize user traits and toggle AI functionality</DialogDescription>
+            <DialogDescription>Customize app behavior for demo purposes</DialogDescription>
             <div>
-              <h3>Features Enabled</h3>
-              <div  style={{ fontSize: 14, color: 'gray' }}>
-                <span style={{ paddingRight: 20 }}>OpenAI Product Personalization Enabled</span>
-                <Switch
-                  text={aiPersonalizationEnabled ? 'On' : 'Off'}
-                  checked = {aiPersonalizationEnabled}
-                  onClick={() => setAiPersonalizationEnabled(!aiPersonalizationEnabled)}
-                />
-              </div>
-            </div>
-            <div>
-              <h3>Current Traits</h3>
+              <h3>Demo Features</h3>
               <div style={{ fontSize: 14, color: 'gray' }}>
-                [
-                {traitsReady && traits ? traits.map((trait, i) => (
-                  <span key={`trait-${i}-${trait}`}>
-                    {trait}
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      id={`btntraitid-${i}`}
-                      onClick={handleDeleteTrait}
-                    >
-                      <Trash className="h-3 w-3" color="red" id={`icntraitid-${i}`} />
-                    </Button>
-                    {i === traits.length-1 ? '' : ', '}
-                  </span>
-                )) : 'Loading'}
-                ]
+                <div>
+                  <span style={{ paddingRight: 20 }}>OpenAI Product Personalization</span>
+                  <Switch
+                    text={aiPersonalizationEnabled ? 'On' : 'Off'}
+                    checked = {aiPersonalizationEnabled}
+                    onClick={() => setAiPersonalizationEnabled(!aiPersonalizationEnabled)}
+                  />                  
+                </div>
+                {/* <div>
+                  <span style={{ paddingRight: 20 }}>Algolia Search Enable</span>
+                  <Switch
+                    text={algoliaEnabled ? 'On' : 'Off'}
+                    checked = {algoliaEnabled}
+                    onClick={() => setAlgoliaEnabled(!algoliaEnabled)}
+                  />                  
+                </div> */}
               </div>
             </div>
-            <Input onChange={handleTextChange} value={traitValue} />
-            <Button size="lg" variant="default" style={{ backgroundColor: '#262626' }} onClick={handleAddTrait}>
-              Add Trait
-            </Button>
+            {/* User traits tied to AI product personalization */}
+            <>
+              <h3>Current Traits</h3>
+              {aiPersonalizationEnabled ? 
+                (
+                  <>
+                    <div style={{ fontSize: 14, color: 'gray' }}>
+                      [
+                      {traitsReady && traits ? traits.map((trait, i) => (
+                        <span key={`trait-${i}-${trait}`}>
+                          {trait}
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            id={`btntraitid-${i}`}
+                            onClick={handleDeleteTrait}
+                          >
+                            <Trash className="h-3 w-3" color="red" id={`icntraitid-${i}`} />
+                          </Button>
+                          {i === traits.length-1 ? '' : ', '}
+                        </span>
+                      )) : 'Loading'}
+                      ]
+                    </div>
+                    <Input onChange={handleTextChange} value={traitValue} />
+                    <Button size="lg" variant="default" style={{ backgroundColor: '#262626' }} onClick={handleAddTrait}>
+                      Add Trait
+                    </Button>                      
+                  </>
+                ) : (
+                  <div style={{ fontSize: 14, color: 'gray', minHeight: 140 }}>
+                    Featured disabled
+                  </div>
+                )
+              }
+            </>
           </DialogContent>
         </DialogPortal>
       </Dialog>
