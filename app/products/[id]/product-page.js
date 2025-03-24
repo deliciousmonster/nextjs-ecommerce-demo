@@ -17,10 +17,7 @@ import {
 
 export default function ProductPage({ id, product }) {
   if (!product) notFound();
-
   const { aiPersonalizationEnabled } = useContext(ControlPanelContext);
-  console.log('controlPanel ', aiPersonalizationEnabled);
-
   const [productDescReady, setProductDescReady] = useState(false);
   const [recommendationsReady, setRecommendationsReady] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -29,25 +26,27 @@ export default function ProductPage({ id, product }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      // check for custom user traits
-      const traits = await getUserTraits() || [];
-      setTraits(traits);
+      // AI PRODUCT PERSONALIZATION
+      if (aiPersonalizationEnabled) {
+        const traits = await getUserTraits() || [];
+        setTraits(traits);
 
-      // If there are custom user traits, get AI recommended product description
-      if (Array.isArray(traits) && traits.length) {
-        try {
-          // Get AI generated customized product description
-          const customDescription = await customizeProductDescription(traits, product.description);
-          setCustomDescription(customDescription);
+        // If there are known user traits:
+        // fetch OpenAI recommended product description based on traits
+        if (Array.isArray(traits) && traits.length) {
+          try {
+            const customDescription = await customizeProductDescription(traits, product.description);
+            setCustomDescription(customDescription);
+            setProductDescReady(true);
+          } catch (err) {
+            console.error('Error fetching custom description data:', err);
+          }
+        } else {
           setProductDescReady(true);
-        } catch (err) {
-          console.error('Error fetching custom description data:', err);
-        }
-      } else {
-        setProductDescReady(true);
+        }        
       }
 
-      // Get default related product recommendations
+      // PRODUCT RECOMMENDATIONS
       try {
         const defaultRecommendation = await listProducts({
           conditions: [
@@ -68,22 +67,14 @@ export default function ProductPage({ id, product }) {
   }, []);
 
   function renderProductDescription() {
-    // No custom traits, render default product description
-    if ((!traits || !Array.isArray(traits) || !traits.length) && productDescReady === true) {
-      return product.description;
+    if (aiPersonalizationEnabled && !customDescription && productDescReady === false) {
+      return 'Custom description loading...';
     }
-
-    // Wait for custom product description to load
-    if (!customDescription && productDescReady === false) {
-      return 'Description loading...';
-    }
-    if (customDescription && productDescReady) {
+    if (aiPersonalizationEnabled && Array.isArray(traits) && traits.length && customDescription) {
       return customDescription;
     }
-    // customDescription returned null
-    if (!customDescription && productDescReady === true){
-      return product.description;
-    }
+    // return default product description from harper
+    return product.description;
   }
 
   return (
