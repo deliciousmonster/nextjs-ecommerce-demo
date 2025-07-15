@@ -20,14 +20,15 @@ export function SiteHeader() {
         }
       });
   }
-  
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="text-xl font-bold">
-          Harper + Next.js Ecommerce Demo
+        <div id="logo"></div>
+        <Link href="/" className="text-xl font-bold title">
+          Harper Digital Commerce
         </Link>
-        
+
         <nav className="flex items-center space-x-6">
           <Link href="/products" className="text-sm font-medium hover:text-primary">
             Products
@@ -64,7 +65,7 @@ export function SiteHeader() {
               </DropdownMenuContent>
             </DropdownMenuPortal>
           </DropdownMenu>
-          
+
           <Button size="icon" variant="ghost">
             <ShoppingBag className="h-5 w-5" />
           </Button>
