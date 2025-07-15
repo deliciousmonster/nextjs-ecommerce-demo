@@ -91,10 +91,9 @@ export default function ProductsPage() {
           <Link key={product.id} href={`/products/${product.id}`}>
             <Card className="overflow-hidden transition-transform hover:scale-[1.02]">
               <div className="relative h-64">
-                <Image
+                <img
                   src={product.image}
                   alt={product.name}
-                  fill
                   className="object-cover"
                 />
               </div>

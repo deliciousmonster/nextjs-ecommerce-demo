@@ -83,10 +83,9 @@ export default function ProductPage({ id, product }) {
         {/* Image Gallery */}
         <div className="space-y-4">
           <div className="relative aspect-square overflow-hidden rounded-lg">
-            <Image
+            <img
               src={product.image}
               alt={`${product.name} - Image`}
-              fill
               className="object-cover"
             />
           </div>
