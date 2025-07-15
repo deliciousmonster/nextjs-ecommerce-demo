@@ -3,7 +3,7 @@ import ProductPage from './product-page';
 import { listProducts, getProduct } from '@/app/actions';
 
 export async function generateStaticParams() {
-  const products = await listProducts();
+  const products = JSON.parse(await listProducts());
   return products.map((data) => ({
     id: data.id,
   }))

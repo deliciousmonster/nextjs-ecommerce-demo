@@ -43,18 +43,18 @@ export default function ProductPage({ id, product }) {
           }
         } else {
           setProductDescReady(true);
-        }        
+        }
       }
 
       // PRODUCT RECOMMENDATIONS
       try {
-        const defaultRecommendation = await listProducts({
+        const defaultRecommendation = JSON.parse(await listProducts({
           conditions: [
             { attribute: 'category', value: product.category, comparator: 'equals' },
             { attribute: 'id', value: id, comparator: 'not_equal' }
           ],
           limit: 3
-        });
+        }));
         setRelatedProducts(defaultRecommendation);
         setRecommendationsReady(true);
       } catch (err) {

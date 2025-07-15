@@ -1,7 +1,7 @@
 'use server';
 import { tables } from 'harperdb';
 const { Product } = tables;
-import { initAlgolia, initOpenai } from '../lib/utils';
+import { initAlgolia, initOpenai } from '@/lib/utils';
 
 // Harper DB Server Actions
 export async function listProducts(conditions = {}) {
@@ -10,7 +10,7 @@ export async function listProducts(conditions = {}) {
 	for await (const product of results) {
 		products.push(product);
 	}
-	return products;
+	return JSON.stringify(products);
 }
 
 export async function getProduct(id) {
@@ -33,7 +33,7 @@ export async function searchProducts(searchTerm = ''){
 		return await algoliaClient.searchSingleIndex({
 			indexName: 'productdata',
 			searchParams: { query: searchTerm },
-		});		
+		});
 	}
 	// TODO: return harperdb graphql query
 	return [];
@@ -52,7 +52,7 @@ export async function customizeProductDescription(userTraits = [], productDescri
 			messages: [{ role: 'user', content: prompt }],
 			model: 'gpt-4o-mini',
 		});
-		return response.choices[0].message.content;		
+		return response.choices[0].message.content;
 	}
 	return null;
 }

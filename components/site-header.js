@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuPortal, DropdownMenuContent } from "./ui/dropdown-menu";
 import { Input } from "./ui/input";
-import { searchProducts } from '../app/actions';
+import { searchProducts } from '@/app/actions';
 
 export function SiteHeader() {
   const [searchResults, setSearchResults] = useState([]);
@@ -15,7 +15,7 @@ export function SiteHeader() {
     // TODO: could debounce for optimization
     searchProducts(e.target.value)
       .then(res => {
-        if (res && res.hits) {
+        if (res?.hits) {
           setSearchResults(res.hits);
         }
       });

@@ -10,7 +10,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -26,7 +25,7 @@ export default function ProductsPage() {
     const fetchData = async () => {
       try {
         const response = await listProducts();
-        setProducts(response);
+        setProducts(JSON.parse(response));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -37,7 +36,7 @@ export default function ProductsPage() {
 
   // Filter and sort products
   const filteredProducts = products
-    .filter((product) => 
+    .filter((product) =>
       (category === "all" || product.category === category) &&
       product.price >= priceRange[0] &&
       product.price <= priceRange[1]

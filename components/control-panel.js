@@ -15,7 +15,7 @@ import { Button } from "./ui/button";
 import { Switch } from "./ui/switch";
 import { Trash } from "lucide-react"
 import harper_logo from './harper_logo.png'
-import { getUserTraits, updateUserTraits } from '../app/actions';
+import { getUserTraits, updateUserTraits } from '@/app/actions';
 
 export const ControlPanelContext = createContext({
   aiPersonalizationEnabled: true,
@@ -29,7 +29,7 @@ export function ControlPanel() {
   const [aiPersonalizationEnabled, setAiPersonalizationEnabled] = useState(true);
   // const [algoliaEnabled, setAlgoliaEnabled] = useState(true);
 
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -92,7 +92,7 @@ export function ControlPanel() {
                     text={aiPersonalizationEnabled ? 'On' : 'Off'}
                     checked = {aiPersonalizationEnabled}
                     onClick={() => setAiPersonalizationEnabled(!aiPersonalizationEnabled)}
-                  />                  
+                  />
                 </div>
                 {/* <div>
                   <span style={{ paddingRight: 20 }}>Algolia Search Enable</span>
@@ -100,14 +100,14 @@ export function ControlPanel() {
                     text={algoliaEnabled ? 'On' : 'Off'}
                     checked = {algoliaEnabled}
                     onClick={() => setAlgoliaEnabled(!algoliaEnabled)}
-                  />                  
+                  />
                 </div> */}
               </div>
             </div>
             {/* User traits tied to AI product personalization */}
             <>
               <h3>Current Traits</h3>
-              {aiPersonalizationEnabled ? 
+              {aiPersonalizationEnabled ?
                 (
                   <>
                     <div style={{ fontSize: 14, color: 'gray' }}>
@@ -131,7 +131,7 @@ export function ControlPanel() {
                     <Input onChange={handleTextChange} value={traitValue} />
                     <Button size="lg" variant="default" style={{ backgroundColor: '#262626' }} onClick={handleAddTrait}>
                       Add Trait
-                    </Button>                      
+                    </Button>
                   </>
                 ) : (
                   <div style={{ fontSize: 14, color: 'gray', minHeight: 140 }}>

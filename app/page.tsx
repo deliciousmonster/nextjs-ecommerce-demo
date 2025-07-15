@@ -6,7 +6,7 @@ import Link from "next/link";
 import { listProducts } from "@/app/actions";
 
 export default async function Home() {
-  const featuredProducts = await listProducts({ limit: 3 });
+  const featuredProducts = JSON.parse(await listProducts({ limit: 3 }));
   const features = [
     {
       icon: <Truck className="h-6 w-6" />,
@@ -75,7 +75,7 @@ export default async function Home() {
           <h2 className="mb-8 text-center text-3xl font-bold">Featured Products</h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {featuredProducts.map((product) => (
-              <Link key={product.id} href={`/products/${product.id}`}>              
+              <Link key={product.id} href={`/products/${product.id}`}>
                 <Card key={product.id} className="overflow-hidden">
                   <div className="relative h-64">
                     <Image
