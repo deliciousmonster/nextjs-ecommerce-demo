@@ -11,8 +11,8 @@ Almost 2% of global ecommerce sales flow through Harper Systems, with an average
 - [Clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) and change directory in your terminal to the code
 - Run `npm i`
 - Run `npm run dev`
-- View the frontend at [localhost:9925](http://localhost:9925/)
-- View the data in Harper Studio UI at [localhost:9926](http://localhost:9926/)
+- View the frontend at [localhost:9926](http://localhost:9926/)
+- View the data in Harper Studio UI at [localhost:9925](http://localhost:9925/)
 
 ## Optional Config: Algolia Search & OpenAI Customized Product Description
 - Run `cp .env.template .env`
