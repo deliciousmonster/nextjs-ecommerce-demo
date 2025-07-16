@@ -94,7 +94,7 @@ export default function ProductsPage() {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="object-cover"
+                  className="object-cover product"
                 />
               </div>
               <CardContent className="p-4">

@@ -86,7 +86,7 @@ export default function ProductPage({ id, product }) {
             <img
               src={product.image}
               alt={`${product.name} - Image`}
-              className="object-cover"
+              className="object-cover product"
             />
           </div>
         </div>

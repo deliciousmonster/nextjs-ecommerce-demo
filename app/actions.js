@@ -57,7 +57,7 @@ export async function customizeProductDescription(userTraits = [], productDescri
 	return null;
 }
 
-export async function getAiRecommendations(userTraits = [], currentId) {
+async function getAiRecommendations(userTraits = [], currentId) {
 	return await listProducts({
 		conditions: [{ attribute: 'id', value: currentId, comparator: 'not_equal' }]
 	})

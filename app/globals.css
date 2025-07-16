@@ -204,3 +204,11 @@ header #logo {
 header .title {
   padding-left: 50px;
 }
+
+img.product {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  inset: 0;
+  color: transparent;
+}

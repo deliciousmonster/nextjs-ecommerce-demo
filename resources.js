@@ -1,3 +1,7 @@
+/***************************************************
+ * BOOTSTRAP
+ ***************************************************/
+
 import productdata from "./productdata.json" with { type: "json" };
 
 // product table seed data

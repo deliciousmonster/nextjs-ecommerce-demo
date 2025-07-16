@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ShoppingBag, Star, TrendingUp, Truck } from "lucide-react";
+import { Star, TrendingUp, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { listProducts } from "@/app/actions";
