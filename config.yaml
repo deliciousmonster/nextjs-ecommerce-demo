@@ -5,3 +5,6 @@ jsResource:
 '@harperdb/nextjs':
   package: '@harperdb/nextjs'
   files: '/*'
+'@harperdb/http-cache':
+  package: '@harperdb/http-cache'
+  files: '/*'
