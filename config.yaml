@@ -2,9 +2,9 @@ graphqlSchema:
   files: '*.graphql'
 jsResource:
   files: './resources.js'
+#'@harperdb/http-cache':
+#  package: '@harperdb/http-cache'
+#  files: '/*'
 '@harperdb/nextjs':
   package: '@harperdb/nextjs'
-  files: '/*'
-'@harperdb/http-cache':
-  package: '@harperdb/http-cache'
   files: '/*'
